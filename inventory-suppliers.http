@@ -1,0 +1,6 @@
+@inventory_suppliers_HostAddress = http://localhost:5072
+
+GET {{inventory_suppliers_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

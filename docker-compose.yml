@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: inventory-suppliers-demo-postgres
+    environment:
+      POSTGRES_USER: inventory-suppliers-demo
+      POSTGRES_PASSWORD: inventory-suppliers-demo
+      POSTGRES_DB: inventory-suppliers-demo-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
