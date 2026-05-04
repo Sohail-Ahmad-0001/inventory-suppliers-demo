@@ -2,7 +2,7 @@
 
 ### 1) Start PostgreSQL
 
-- `docker compose up -d postgres`
+- `docker compose up -d`
 
 ### 2) Run API
 
