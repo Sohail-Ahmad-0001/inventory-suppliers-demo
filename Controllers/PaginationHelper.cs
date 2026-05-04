@@ -8,6 +8,8 @@ internal static class PaginationHelper
         int pageSize,
         int total)
     {
+        int totalPages = ComputeTotalPages(total, pageSize);
+
         return new
         {
             data = items,
@@ -16,7 +18,9 @@ internal static class PaginationHelper
                 pageNumber,
                 pageSize,
                 TotalRecords = total,
-                TotalPages = ComputeTotalPages(total, pageSize)
+                TotalPages = totalPages,
+                hasPreviousPage = pageNumber > 1,
+                hasNextPage = totalPages > 0 && pageNumber < totalPages
             }
         };
     }
