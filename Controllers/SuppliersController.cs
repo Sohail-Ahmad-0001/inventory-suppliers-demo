@@ -68,6 +68,11 @@ public sealed class SuppliersController(ISupplierRepository supplierRepository) 
     [ProducesResponseType(typeof(SupplierDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] CreateSupplierDto dto)
     {
+        if (await supplierRepository.CodeExistsAsync(dto.Code))
+        {
+            return Conflict(SupplierCodeConflictProblem());
+        }
+
         DateTime utcNow = DateTime.UtcNow;
 
         var supplier = new Supplier
@@ -93,6 +98,11 @@ public sealed class SuppliersController(ISupplierRepository supplierRepository) 
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateSupplierDto dto)
     {
+        if (await supplierRepository.CodeExistsAsync(dto.Code, excludingSupplierId: id))
+        {
+            return Conflict(SupplierCodeConflictProblem());
+        }
+
         Supplier? updated = await supplierRepository.UpdateAsync(id, dto);
 
         if (updated is null)
@@ -116,5 +126,15 @@ public sealed class SuppliersController(ISupplierRepository supplierRepository) 
         }
 
         return Ok(SupplierMapper.ToDto(deleted, includeLocations: false));
+    }
+
+    private static ValidationProblemDetails SupplierCodeConflictProblem()
+    {
+        return new ValidationProblemDetails
+        {
+            Status = StatusCodes.Status409Conflict,
+            Title = "Supplier code already exists.",
+            Errors = { [nameof(UpdateSupplierDto.Code)] = new[] { "A supplier with this code already exists." } }
+        };
     }
 }

@@ -81,6 +81,18 @@ public class SupplierRepository(InventoryDbContext dbContext) : ISupplierReposit
         return supplier;
     }
 
+    public Task<bool> CodeExistsAsync(string code, Guid? excludingSupplierId = null)
+    {
+        IQueryable<Supplier> query = dbContext.Suppliers.Where(s => s.Code == code);
+
+        if (excludingSupplierId.HasValue)
+        {
+            query = query.Where(s => s.Id != excludingSupplierId.Value);
+        }
+
+        return query.AnyAsync();
+    }
+
     public async Task<Supplier> CreateAsync(Supplier supplier)
     {
         dbContext.Suppliers.Add(supplier);

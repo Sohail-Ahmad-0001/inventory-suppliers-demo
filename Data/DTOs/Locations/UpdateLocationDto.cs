@@ -1,16 +1,28 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace inventory_suppliers.Data.DTOs.Locations;
 
 public class UpdateLocationDto
 {
-    public string Name { get; set; } = string.Empty;
+    [Required]
+    [MaxLength(150)]
+    public required string Name { get; set; }
 
-    public string Address { get; set; } = string.Empty;
+    [Required]
+    [MaxLength(250)]
+    public required string Address { get; set; }
 
-    public string City { get; set; } = string.Empty;
+    [Required]
+    [MaxLength(100)]
+    public required string City { get; set; }
 
-    public string State { get; set; } = string.Empty;
+    [MaxLength(100)]
+    public string? State { get; set; }
 
-    public string Country { get; set; } = string.Empty;
+    [MaxLength(30)]
+    public string? PostalCode { get; set; }
 
-    public string PostalCode { get; set; } = string.Empty;
+    [Required]
+    [MaxLength(100)]
+    public required string Country { get; set; }
 }

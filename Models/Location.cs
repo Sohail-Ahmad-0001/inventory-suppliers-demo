@@ -14,11 +14,11 @@ public class Location
 
     public required string City { get; set; }
 
-    public required string State { get; set; }
+    public string State { get; set; } = string.Empty;
 
     public required string Country { get; set; }
 
-    public required string PostalCode { get; set; }
+    public string PostalCode { get; set; } = string.Empty;
     
     public DateTime CreatedAt { get; set; }
 

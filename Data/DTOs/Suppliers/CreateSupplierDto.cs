@@ -1,12 +1,24 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace inventory_suppliers.Data.DTOs.Suppliers;
 
 public class CreateSupplierDto
 {
-    public string Name { get; set; } = string.Empty;
+    [Required]
+    [MaxLength(200)]
+    public required string Name { get; set; }
 
-    public string Email { get; set; } = string.Empty;
+    [Required]
+    [EmailAddress]
+    [MaxLength(254)]
+    public required string Email { get; set; }
 
-    public string Code { get; set; } = string.Empty;
+    [Required]
+    [MaxLength(64)]
+    public required string Code { get; set; }
 
-    public string Phone { get; set; } = string.Empty;
+    [Required]
+    [StringLength(30, MinimumLength = 5)]
+    [RegularExpression(@"^\+?[0-9][0-9\s\-()]{4,29}$", ErrorMessage = "Phone must be a valid number.")]
+    public required string Phone { get; set; }
 }

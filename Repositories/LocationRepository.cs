@@ -91,9 +91,9 @@ public class LocationRepository(InventoryDbContext dbContext) : ILocationReposit
         location.Name = dto.Name;
         location.Address = dto.Address;
         location.City = dto.City;
-        location.State = dto.State;
+        location.State = dto.State ?? string.Empty;
         location.Country = dto.Country;
-        location.PostalCode = dto.PostalCode;
+        location.PostalCode = dto.PostalCode ?? string.Empty;
         location.UpdatedAt = DateTime.UtcNow;
 
         await dbContext.SaveChangesAsync();

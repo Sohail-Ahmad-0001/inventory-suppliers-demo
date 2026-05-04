@@ -27,6 +27,10 @@ namespace inventory_suppliers.Data
                 .HasConversion<string>()
                 .HasDefaultValue(StatusEnum.Active);
 
+            modelBuilder.Entity<Supplier>()
+                .HasIndex(s => s.Code)
+                .IsUnique();
+
             modelBuilder.Entity<Location>()
                 .Property(e => e.Status)
                 .HasConversion<string>()

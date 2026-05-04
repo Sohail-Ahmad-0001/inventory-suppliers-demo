@@ -18,6 +18,8 @@ public interface ISupplierRepository
 
     Task<Supplier?> GetByIdAsync(Guid id, bool includeLocations);
 
+    Task<bool> CodeExistsAsync(string code, Guid? excludingSupplierId = null);
+
     Task<Supplier> CreateAsync(Supplier supplier);
 
     Task<Supplier?> UpdateAsync(Guid id, UpdateSupplierDto dto);

@@ -14,6 +14,26 @@ public class LocationsController(
     ILocationRepository locationRepository,
     ISupplierRepository supplierRepository) : ControllerBase
 {
+    private async Task<IActionResult?> ValidateSupplierRouteAsync(Guid supplierId)
+    {
+        if (supplierId == Guid.Empty)
+        {
+            return BadRequest(new ValidationProblemDetails
+            {
+                Errors = { ["supplierId"] = new[] { "supplierId is required." } }
+            });
+        }
+
+        Supplier? supplier = await supplierRepository.GetByIdAsync(supplierId, includeLocations: false);
+
+        if (supplier is null)
+        {
+            return NotFound();
+        }
+
+        return null;
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetAll(
         [FromRoute] Guid supplierId,
@@ -25,11 +45,11 @@ public class LocationsController(
         [FromQuery] int pageSize = 50,
         [FromQuery] StatusEnum? status = null)
     {
-        Supplier? supplier = await supplierRepository.GetByIdAsync(supplierId, includeLocations: false);
+        IActionResult? supplierError = await ValidateSupplierRouteAsync(supplierId);
 
-        if (supplier is null)
+        if (supplierError is not null)
         {
-            return NotFound();
+            return supplierError;
         }
 
         (List<Location> items, int total) = await locationRepository.GetAllAsync(
@@ -51,6 +71,13 @@ public class LocationsController(
 
     public async Task<IActionResult> GetById([FromRoute] Guid supplierId, [FromRoute] Guid id)
     {
+        IActionResult? supplierError = await ValidateSupplierRouteAsync(supplierId);
+
+        if (supplierError is not null)
+        {
+            return supplierError;
+        }
+
         Location? location = await locationRepository.GetByIdAsync(supplierId, id);
 
         if (location is null)
@@ -65,11 +92,11 @@ public class LocationsController(
 
     public async Task<IActionResult> Create([FromRoute] Guid supplierId, [FromBody] CreateLocationDto dto)
     {
-        Supplier? supplier = await supplierRepository.GetByIdAsync(supplierId, includeLocations: false);
+        IActionResult? supplierError = await ValidateSupplierRouteAsync(supplierId);
 
-        if (supplier is null)
+        if (supplierError is not null)
         {
-            return NotFound();
+            return supplierError;
         }
 
         DateTime utcNow = DateTime.UtcNow;
@@ -81,9 +108,9 @@ public class LocationsController(
             Name = dto.Name,
             Address = dto.Address,
             City = dto.City,
-            State = dto.State,
+            State = dto.State ?? string.Empty,
             Country = dto.Country,
-            PostalCode = dto.PostalCode,
+            PostalCode = dto.PostalCode ?? string.Empty,
             CreatedAt = utcNow,
             UpdatedAt = utcNow,
             Status = StatusEnum.Active
@@ -102,6 +129,13 @@ public class LocationsController(
         [FromRoute] Guid id,
         [FromBody] UpdateLocationDto dto)
     {
+        IActionResult? supplierError = await ValidateSupplierRouteAsync(supplierId);
+
+        if (supplierError is not null)
+        {
+            return supplierError;
+        }
+
         Location? updated = await locationRepository.UpdateAsync(supplierId, id, dto);
 
         if (updated is null)
@@ -117,6 +151,13 @@ public class LocationsController(
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete([FromRoute] Guid supplierId, [FromRoute] Guid id)
     {
+        IActionResult? supplierError = await ValidateSupplierRouteAsync(supplierId);
+
+        if (supplierError is not null)
+        {
+            return supplierError;
+        }
+
         Location? deleted = await locationRepository.DeleteAsync(supplierId, id);
 
         if (deleted is null)
