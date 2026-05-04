@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using inventory_suppliers.Enums;
 using inventory_suppliers.Models;
 
 namespace inventory_suppliers.Data
@@ -21,6 +22,16 @@ namespace inventory_suppliers.Data
                 .WithMany(s => s.Locations)
                 .HasForeignKey(l => l.SupplierId);
 
+            modelBuilder.Entity<Supplier>()
+                .Property(e => e.Status)
+                .HasConversion<string>()
+                .HasDefaultValue(StatusEnum.Active);
+
+            modelBuilder.Entity<Location>()
+                .Property(e => e.Status)
+                .HasConversion<string>()
+                .HasDefaultValue(StatusEnum.Active);
+
             var seedTime = new DateTime(2024, 6, 1, 0, 0, 0, DateTimeKind.Utc);
 
             var supplierAcme = Guid.Parse("54466f17-02af-48e7-8ed3-5a4a8bfacf6f");
@@ -38,6 +49,7 @@ namespace inventory_suppliers.Data
                     Phone = "+64 9 555 0100",
                     CreatedAt = seedTime,
                     UpdatedAt = seedTime,
+                    Status = StatusEnum.Active,
                     DeletedAt = null
                 },
                 new Supplier
@@ -49,6 +61,7 @@ namespace inventory_suppliers.Data
                     Phone = "+64 9 555 0200",
                     CreatedAt = seedTime,
                     UpdatedAt = seedTime,
+                    Status = StatusEnum.Active,
                     DeletedAt = null
                 },
                 new Supplier
@@ -60,6 +73,7 @@ namespace inventory_suppliers.Data
                     Phone = "+64 4 555 0300",
                     CreatedAt = seedTime,
                     UpdatedAt = seedTime,
+                    Status = StatusEnum.Active,
                     DeletedAt = null
                 }
             };
@@ -78,6 +92,7 @@ namespace inventory_suppliers.Data
                     PostalCode = "1010",
                     CreatedAt = seedTime,
                     UpdatedAt = seedTime,
+                    Status = StatusEnum.Active,
                     DeletedAt = null
                 },
                 new Location
@@ -92,6 +107,7 @@ namespace inventory_suppliers.Data
                     PostalCode = "6011",
                     CreatedAt = seedTime,
                     UpdatedAt = seedTime,
+                    Status = StatusEnum.Active,
                     DeletedAt = null
                 },
                 new Location
@@ -106,6 +122,7 @@ namespace inventory_suppliers.Data
                     PostalCode = "0110",
                     CreatedAt = seedTime,
                     UpdatedAt = seedTime,
+                    Status = StatusEnum.Active,
                     DeletedAt = null
                 },
                 new Location
@@ -120,6 +137,7 @@ namespace inventory_suppliers.Data
                     PostalCode = "8011",
                     CreatedAt = seedTime,
                     UpdatedAt = seedTime,
+                    Status = StatusEnum.Active,
                     DeletedAt = null
                 },
                 new Location
@@ -134,6 +152,7 @@ namespace inventory_suppliers.Data
                     PostalCode = "9016",
                     CreatedAt = seedTime,
                     UpdatedAt = seedTime,
+                    Status = StatusEnum.Active,
                     DeletedAt = null
                 }
             };
