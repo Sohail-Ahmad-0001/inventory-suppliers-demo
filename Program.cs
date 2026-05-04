@@ -1,4 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using inventory_suppliers.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<InventoryDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("InventoryDbConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -10,6 +17,12 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 app.UseSwagger();
 app.UseSwaggerUI();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<InventoryDbContext>();
+    db.Database.Migrate();
+}
 
 var summaries = new[]
 {

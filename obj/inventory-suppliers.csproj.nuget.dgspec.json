@@ -10,7 +10,7 @@
         "projectUniqueName": "/Users/sohailahmad/Desktop/Projects/inventory-suppliers/inventory-suppliers.csproj",
         "projectName": "inventory-suppliers",
         "projectPath": "/Users/sohailahmad/Desktop/Projects/inventory-suppliers/inventory-suppliers.csproj",
-        "packagesPath": "/var/folders/84/x7ssv6v14s3_fnh0mtnxj9v80000gn/T/cursor-sandbox-cache/03e77f9f7404792c29eeb18128bf6245/nuget",
+        "packagesPath": "/Users/sohailahmad/.nuget/packages/",
         "outputPath": "/Users/sohailahmad/Desktop/Projects/inventory-suppliers/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
