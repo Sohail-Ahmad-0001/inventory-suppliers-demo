@@ -10,7 +10,7 @@
         "projectUniqueName": "/Users/sohailahmad/Desktop/Projects/inventory-suppliers/inventory-suppliers.csproj",
         "projectName": "inventory-suppliers",
         "projectPath": "/Users/sohailahmad/Desktop/Projects/inventory-suppliers/inventory-suppliers.csproj",
-        "packagesPath": "/Users/sohailahmad/.nuget/packages/",
+        "packagesPath": "/var/folders/84/x7ssv6v14s3_fnh0mtnxj9v80000gn/T/cursor-sandbox-cache/03e77f9f7404792c29eeb18128bf6245/nuget",
         "outputPath": "/Users/sohailahmad/Desktop/Projects/inventory-suppliers/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
@@ -44,6 +44,20 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[10.1.7, )"
